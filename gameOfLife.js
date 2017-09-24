@@ -11,7 +11,8 @@ function generateField(size) {
             field[i][j] = Math.round(Math.random());
         }
     }
-
+    console.log("Field has been generated");
+    console.log(field);
     return field;
 }
 
@@ -25,9 +26,9 @@ function checkIsFieldAlive(field) {
                 return true;
             }
         }
-        return false;
     }
     console.log("There is no more alive cells");
+    return false;
 }
 
 // isLonely() - Any live cell with fewer than two live neighbours dies, as if caused by underpopulation.
@@ -40,26 +41,27 @@ function nextTick(field) {
     for (let i = 0; i < field.length; i++) {
         for (let j = 0; j < field.length; j++) {
             if (field[i][j] === 0) {
-                if (tickChecker.isResurrected(i, j) === true){
+                if (tickChecker.isResurrected(field, i, j) === true){
                     newField[i][j] = 1;
                 }
             } else {
-                if (tickChecker.isLonely(i, j) === true) {
+                if (tickChecker.isLonely(field, i, j) === true) {
                     newField[i][j] = 0;
                     break;
                 }
-                if (tickChecker.isSupported(i, j) === true) {
+                if (tickChecker.isSupported(field, i, j) === true) {
                     newField[i][j] = 1;
                     break;
                 }
-                if (tickChecker.isOverpopulated(i, j) === true) {
+                if (tickChecker.isOverpopulated(field, i, j) === true) {
                     newField[i][j] = 0;
                     break;
                 }
             }
         }
     }
-
+    console.log("Tick happened, new field is:");
+    console.log(newField);
     return newField;
 }
 
@@ -69,7 +71,7 @@ function main(size) {
 
     while (true) {
         if (checkIsFieldAlive(newField)) {
-            console.log("One more tick...");
+            console.log("One more tick will happen...");
             nextTick(newField);
         } else {
             break;
