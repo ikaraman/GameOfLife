@@ -2,20 +2,26 @@
 
 const tickChecker = require("./tick");
 
-function generateField(size) {
+function generateField(fieldSize) {
     let field = [];
 
-    for (let i = 0; i < size; i++) {
+    for (let i = 0; i < fieldSize; i++) {
         field[i] = [];
-        for (let j = 0; j < size; j++){
+        for (let j = 0; j < fieldSize; j++){
             field[i][j] = Math.round(Math.random());
         }
     }
     console.log("Field has been generated");
-    console.log(field);
+    drawField(field);
     return field;
 }
 
+function drawField (field) {
+    for (let i = 0; i < field.length; i++) {
+        console.log(field[i]);
+    }
+    sleep(1000);
+}
 
 function checkIsFieldAlive(field) {
 
@@ -29,6 +35,18 @@ function checkIsFieldAlive(field) {
     }
     console.log("There is no more alive cells");
     return false;
+}
+
+function compareFields(field, newField) {
+    for (let i = 0; i < field.length; i++) {
+        for (let j = 0; j < field.length; j++){
+            if (field[i][j] !== newField[i][j]) {
+                console.log("Fields are not equal...");
+                break;
+            }
+        }
+    }
+
 }
 
 // isLonely() - Any live cell with fewer than two live neighbours dies, as if caused by underpopulation.
@@ -61,18 +79,27 @@ function nextTick(field) {
         }
     }
     console.log("Tick happened, new field is:");
-    console.log(newField);
+    drawField(newField);
     return newField;
 }
 
+function sleep(sleepDuration) {
+    let now = new Date().getTime();
+    while (new Date().getTime() < now + sleepDuration) {
+        /* do nothing */
+    }
+}
 
-function main(size) {
-    let newField = generateField(size);
+function main(fieldSize) {
+    let newField = generateField(fieldSize);
 
     while (true) {
         if (checkIsFieldAlive(newField)) {
             console.log("One more tick will happen...");
-            nextTick(newField);
+            if (compareFields(newField, nextTick(newField))) {
+                console.log("Execution will stop. New field is the same as a previous one");
+                break;
+            }
         } else {
             break;
         }
@@ -80,4 +107,4 @@ function main(size) {
 
 }
 
-main(3);
+main(10);
