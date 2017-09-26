@@ -166,10 +166,36 @@ function checkRightBottom(field, x, y) {
     }
 }
 
+function nextTick(field) {
+    let newField = field;
+
+    for (let i = 0; i < field.length; i++) {
+        for (let j = 0; j < field.length; j++) {
+            if (field[i][j] === 0) {
+                if (isResurrected(field, i, j) === true){
+                    newField[i][j] = 1;
+                }
+            } else {
+                if (isLonely(field, i, j) === true) {
+                    newField[i][j] = 0;
+                    break;
+                }
+                if (isSupported(field, i, j) === true) {
+                    newField[i][j] = 1;
+                    break;
+                }
+                if (isOverpopulated(field, i, j) === true) {
+                    newField[i][j] = 0;
+                    break;
+                }
+            }
+        }
+    }
+    //console.log("Tick happened, new field is:");
+    return newField;
+}
+
 
 module.exports = {
-    isLonely: isLonely,
-    isSupported: isSupported,
-    isOverpopulated: isOverpopulated,
-    isResurrected: isResurrected
+    nextTick: nextTick
 };
