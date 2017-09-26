@@ -1,0 +1,30 @@
+{
+  "name": "GameOfLife",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "jest"
+  },
+  "jest" : {
+    "automock" :false,
+    "collectCoverage" :true,
+    "roots": [
+      "<rootDir>/tests/"
+    ],
+    "modulePaths": [
+      "<rootDir>"
+    ]
+  },
+  "author": "Ivan Karaman.",
+  "description": "",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git://reponame"
+  },
+  "devDependencies": {
+    "http-server": "^0.10.0"
+  },
+  "dependencies": {
+    "clone": "^2.1.1"
+  }
+}
