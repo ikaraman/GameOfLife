@@ -9,7 +9,6 @@ function generateField(fieldSize) {
             field[i][j] = Math.round(Math.random());
         }
     }
-    console.log("Field has been generated");
     return field;
 }
 
@@ -32,7 +31,6 @@ function checkFieldsEqual(field, newField) {
     for (let i = 0; i < field.length; i++) {
         for (let j = 0; j < field.length; j++) {
             if (field[i][j] !== newField[i][j]) {
-                console.log("Fields are not equal...");
                 return false;
             }
         }

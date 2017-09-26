@@ -1,23 +1,27 @@
 "use strict";
 
 const tick = require("./tick"),
-    field = require("./field");
+    field = require("./field"),
+    clone = require("clone");
 
 function gameOfLife(fieldSize, seedField) {
     let newField;
     if (seedField === undefined) {
         newField = field.generateField(fieldSize);
     } else {
-        newField = seedField;
+        newField = clone(seedField);
     }
+    field.drawField(newField);
 
     while (true) {
-        field.drawField(newField);
         if (field.checkIsFieldAlive(newField)) {
             //console.log("One more tick will happen...");
-            if (!(field.checkFieldsEqual(newField, tick.nextTick(newField)))) {
+            if (field.checkFieldsEqual(newField, tick.nextTick(newField))) {
                 console.log("Execution will stop. New field is the same as a previous one");
                 break;
+            } else {
+                newField = clone(tick.nextTick(newField));
+                field.drawField(newField);
             }
         } else {
             break;
