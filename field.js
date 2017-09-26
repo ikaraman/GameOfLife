@@ -28,15 +28,16 @@ function checkIsFieldAlive(field) {
     return false;
 }
 
-function compareFields(field, newField) {
+function checkFieldsEqual(field, newField) {
     for (let i = 0; i < field.length; i++) {
         for (let j = 0; j < field.length; j++) {
             if (field[i][j] !== newField[i][j]) {
                 console.log("Fields are not equal...");
-                break;
+                return false;
             }
         }
     }
+    return true;
 }
 
 function sleep(sleepDuration) {
@@ -60,7 +61,7 @@ function drawField(field) {
 
 module.exports = {
     drawField: drawField,
-    compareFields: compareFields,
+    checkFieldsEqual: checkFieldsEqual,
     checkIsFieldAlive: checkIsFieldAlive,
     generateField: generateField
 };

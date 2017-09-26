@@ -15,7 +15,7 @@ function gameOfLife(fieldSize, seedField) {
         field.drawField(newField);
         if (field.checkIsFieldAlive(newField)) {
             //console.log("One more tick will happen...");
-            if (field.compareFields(newField, tick.nextTick(newField))) {
+            if (!(field.checkFieldsEqual(newField, tick.nextTick(newField)))) {
                 console.log("Execution will stop. New field is the same as a previous one");
                 break;
             }
@@ -23,10 +23,11 @@ function gameOfLife(fieldSize, seedField) {
             break;
         }
     }
-
 }
 
 let seed = [[0,1,0],[0,1,0],[0,1,0]];
+
+//gameOfLife(3);
 gameOfLife(3, seed);
 // isLonely() - Any live cell with fewer than two live neighbours dies, as if caused by underpopulation.
 // isSupported() - Any live cell with two or three live neighbours lives on to the next generation.
