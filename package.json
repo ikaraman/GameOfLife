@@ -22,7 +22,8 @@
     "url": "git://reponame"
   },
   "devDependencies": {
-    "http-server": "^0.10.0"
+    "http-server": "^0.10.0",
+    "jest": "^21.1.0"
   },
   "dependencies": {
     "clone": "^2.1.1"

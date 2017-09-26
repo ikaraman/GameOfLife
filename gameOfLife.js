@@ -29,7 +29,7 @@ function gameOfLife(fieldSize, seedField) {
     }
 }
 
-let seed = [[0,1,0],[0,1,0],[0,1,0]];
+let seed = [[0,1,0],[1,0,1],[0,1,0]];
 
 //gameOfLife(3);
 gameOfLife(3, seed);
