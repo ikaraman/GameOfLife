@@ -7,7 +7,7 @@ const Tick = require("./tick"),
 
 function gameOfLife(fieldSize, seedField) {
     if (fieldSize < 2) {
-        console.log("Field size cannot be less than 2. Execution is stopped.");
+        console.log("Field size cannot be less than 2. Execution will stop.");
         return false;
     }
 
