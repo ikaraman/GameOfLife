@@ -1,13 +1,20 @@
 "use strict";
 
-function generateField(fieldSize) {
-    let field = [];
+const Clone = require("clone");
 
-    for (let i = 0; i < fieldSize; i++) {
-        field[i] = [];
-        for (let j = 0; j < fieldSize; j++){
-            field[i][j] = Math.round(Math.random());
+function generateField(fieldSize, seedField) {
+    let field;
+    if (seedField === undefined) {
+        field = [];
+
+        for (let i = 0; i < fieldSize; i++) {
+            field[i] = [];
+            for (let j = 0; j < fieldSize; j++){
+                field[i][j] = Math.round(Math.random());
+            }
         }
+    } else {
+        field = Clone(seedField);
     }
     return field;
 }

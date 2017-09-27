@@ -1,27 +1,28 @@
 "use strict";
 
-const tick = require("./tick"),
-    field = require("./field"),
-    clone = require("clone");
+const Tick = require("./tick"),
+    Field = require("./field"),
+    Clone = require("clone");
+
 
 function gameOfLife(fieldSize, seedField) {
-    let newField;
-    if (seedField === undefined) {
-        newField = field.generateField(fieldSize);
-    } else {
-        newField = clone(seedField);
+    if (fieldSize < 2) {
+        console.log("Field size cannot be less than 2. Execution is stopped.");
+        return false;
     }
-    field.drawField(newField);
+
+    let newField = Field.generateField(fieldSize, seedField);
+    Field.drawField(newField);
 
     while (true) {
-        if (field.checkIsFieldAlive(newField)) {
+        if (Field.checkIsFieldAlive(newField)) {
             //console.log("One more tick will happen...");
-            if (field.checkFieldsEqual(newField, tick.nextTick(newField))) {
+            if (Field.checkFieldsEqual(newField, Tick.nextTick(newField))) {
                 console.log("Execution will stop. New field is the same as a previous one");
                 break;
             } else {
-                newField = clone(tick.nextTick(newField));
-                field.drawField(newField);
+                newField = Clone(Tick.nextTick(newField));
+                Field.drawField(newField);
             }
         } else {
             break;
@@ -29,11 +30,14 @@ function gameOfLife(fieldSize, seedField) {
     }
 }
 
-let seed = [[0,1,0],[1,0,1],[0,1,0]];
-
+//let seed = [[0,1,0],[1,0,1],[0,1,0]];
 //gameOfLife(3);
-gameOfLife(3, seed);
+
 // isLonely() - Any live cell with fewer than two live neighbours dies, as if caused by underpopulation.
 // isSupported() - Any live cell with two or three live neighbours lives on to the next generation.
 // isOverpopulated() - Any live cell with more than three live neighbours dies, as if by overpopulation.
 // isResurrected() - Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
+
+module.exports = {
+    gameOfLife: gameOfLife
+};
