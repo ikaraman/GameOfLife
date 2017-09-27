@@ -65,8 +65,8 @@ function drawField(field) {
 }
 
 module.exports = {
-    drawField: drawField,
-    checkFieldsEqual: checkFieldsEqual,
+    generateField: generateField,
     checkIsFieldAlive: checkIsFieldAlive,
-    generateField: generateField
+    checkFieldsEqual: checkFieldsEqual,
+    drawField: drawField
 };
