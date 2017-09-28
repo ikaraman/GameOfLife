@@ -7,6 +7,8 @@ const clone = require("clone");
 // isOverpopulated() - Any live cell with more than three live neighbours dies, as if by overpopulation.
 // isResurrected() - Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
 
+//challenge: remove all comments, all function size: 10 lines max, idiot-proof naming
+
 function checkLeftTop(field, x, y) {
     if (field[x - 1][y - 1] === 1) {
         return 1;
