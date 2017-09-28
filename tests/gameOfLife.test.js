@@ -117,6 +117,10 @@ describe("gameOfLife() tests:", () => {
         Field.generateField = generateFieldUnmocker;
     });
 
+    it("field size not matching the seed size should be handled gracefully", () => {
+        expect(console.log).toHaveBeenLastCalledWith("This test is to be developed");
+    });
+
     it("if field is not dead and (newField != field) new field must be generated and returned", () => {
         const seed = [[1, 1],
                       [0, 0]];
