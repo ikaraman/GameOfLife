@@ -1,6 +1,7 @@
 "use strict";
 
-const Clone = require("clone");
+const Clone = require("clone"),
+    Clear = require("clear");
 
 function generateField(fieldSize, seedField) {
     let field;
@@ -53,10 +54,11 @@ function sleep(sleepDuration) {
 }
 
 function drawField(field) {
+    Clear();
     for (let i = 0; i < field.length; i++) {
         console.log(field[i]);
     }
-    sleep(10);
+    sleep(500);
     for (let i = 0; i < field.length; i++) {
         process.stdout.write("---");
 
