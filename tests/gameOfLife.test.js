@@ -11,10 +11,10 @@ console.log = jest.fn(function() {
 describe("Field-based tests", () => {
     describe("Still life tests:", () => {
         it("block should stop execution without ticking", () => {
-            let seed = [[0, 0, 0, 0],
-                        [0, 1, 1, 0],
-                        [0, 1, 1, 0],
-                        [0, 0, 0, 0]];
+            const seed = [[0, 0, 0, 0],
+                          [0, 1, 1, 0],
+                          [0, 1, 1, 0],
+                          [0, 0, 0, 0]];
 
 
             GameOfLife.gameOfLife(4, seed);
@@ -22,7 +22,7 @@ describe("Field-based tests", () => {
         });
 
         it("block should stop execution without ticking (small field)", () => {
-            let seed = [[1, 1],
+            const seed = [[1, 1],
                         [1, 1]];
 
             GameOfLife.gameOfLife(2, seed);
@@ -30,46 +30,46 @@ describe("Field-based tests", () => {
         });
 
         it("beehive should stop execution without ticking", () => {
-            let seed = [[0, 0, 0, 0, 0, 0],
-                        [0, 0, 1, 1, 0, 0],
-                        [0, 1, 0, 0, 1, 0],
-                        [0, 0, 1, 1, 0, 0],
-                        [0, 0, 0, 0, 0, 0],
-                        [0, 0, 0, 0, 0, 0]];
+            const seed = [[0, 0, 0, 0, 0, 0],
+                          [0, 0, 1, 1, 0, 0],
+                          [0, 1, 0, 0, 1, 0],
+                          [0, 0, 1, 1, 0, 0],
+                          [0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0]];
 
             GameOfLife.gameOfLife(6, seed);
             expect(console.log).toHaveBeenLastCalledWith("Execution will stop. New field is the same as a previous one");
         });
 
         it("loaf should stop execution without ticking", () => {
-            let seed = [[0, 0, 0, 0, 0, 0],
-                        [0, 0, 1, 1, 0, 0],
-                        [0, 1, 0, 0, 1, 0],
-                        [0, 0, 1, 0, 1, 0],
-                        [0, 0, 0, 1, 0, 0],
-                        [0, 0, 0, 0, 0, 0]];
+            const seed = [[0, 0, 0, 0, 0, 0],
+                          [0, 0, 1, 1, 0, 0],
+                          [0, 1, 0, 0, 1, 0],
+                          [0, 0, 1, 0, 1, 0],
+                          [0, 0, 0, 1, 0, 0],
+                          [0, 0, 0, 0, 0, 0]];
 
             GameOfLife.gameOfLife(6, seed);
             expect(console.log).toHaveBeenLastCalledWith("Execution will stop. New field is the same as a previous one");
         });
 
         it("boat should stop execution without ticking", () => {
-            let seed = [[0, 0, 0, 0, 0, 0],
-                        [0, 1, 1, 0, 0, 0],
-                        [0, 1, 0, 1, 0, 0],
-                        [0, 0, 1, 0, 0, 0],
-                        [0, 0, 0, 0, 0, 0],
-                        [0, 0, 0, 0, 0, 0]];
+            const seed = [[0, 0, 0, 0, 0, 0],
+                          [0, 1, 1, 0, 0, 0],
+                          [0, 1, 0, 1, 0, 0],
+                          [0, 0, 1, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0]];
 
             GameOfLife.gameOfLife(6, seed);
             expect(console.log).toHaveBeenLastCalledWith("Execution will stop. New field is the same as a previous one");
         });
 
         it("tub should stop execution without ticking", () => {
-            let seed = [[0, 0, 0, 0],
-                        [0, 0, 1, 0],
-                        [0, 1, 0, 1],
-                        [0, 0, 1, 0]];
+            const seed = [[0, 0, 0, 0],
+                         [0, 0, 1, 0],
+                         [0, 1, 0, 1],
+                         [0, 0, 1, 0]];
 
             GameOfLife.gameOfLife(4, seed);
             expect(console.log).toHaveBeenLastCalledWith("Execution will stop. New field is the same as a previous one");
@@ -103,9 +103,9 @@ describe("Field-based tests", () => {
 
 describe("gameOfLife() tests:", () => {
     it("empty field should stop the execution", () => {
-        let seed = [];
+        const seed = [];
 
-        let generateFieldUnmocker = Field.generateField;
+        const generateFieldUnmocker = Field.generateField;
         Field.generateField = jest.fn(function() {
             return seed;
         });
@@ -118,13 +118,13 @@ describe("gameOfLife() tests:", () => {
     });
 
     it("if field is not dead and (newField != field) new field must be generated and returned", () => {
-        let seed = [[1, 1],
-                    [0, 0]];
+        const seed = [[1, 1],
+                      [0, 0]];
 
-        let expectedField = [[0, 0],
-                             [0, 0]];
+        const expectedField = [[0, 0],
+                               [0, 0]];
 
-        let drawFieldUnmocker = Field.drawField;
+        const drawFieldUnmocker = Field.drawField;
         Field.drawField = jest.fn(function() {
         });
 
@@ -135,14 +135,14 @@ describe("gameOfLife() tests:", () => {
     });
 
     it("starting without initial seed should generate a new field", () => {
-        let field = [[0, 0, 0, 0, 0, 0],
-                     [0, 1, 1, 0, 0, 0],
-                     [0, 1, 0, 1, 0, 0],
-                     [0, 0, 1, 0, 0, 0],
-                     [0, 0, 0, 0, 0, 0],
-                     [0, 0, 0, 0, 0, 0]];
+        const field = [[0, 0, 0, 0, 0, 0],
+                       [0, 1, 1, 0, 0, 0],
+                       [0, 1, 0, 1, 0, 0],
+                       [0, 0, 1, 0, 0, 0],
+                       [0, 0, 0, 0, 0, 0],
+                       [0, 0, 0, 0, 0, 0]];
 
-        let generateFieldUnmocker = Field.generateField;
+        const generateFieldUnmocker = Field.generateField;
         Field.generateField = jest.fn(function() {
             return field;
         });
@@ -165,15 +165,15 @@ describe("tick() tests:", () => {
     it("nextTick() should call all subfunctions/checks", () => {
         //this test just gives me more coverage on nextTick() logic:
         // isLonely(), isSupported(), isOverpopulated(), isResurrected()
-        let seed = [[1, 1, 1, 0],
-                    [0, 1, 1, 0],
-                    [0, 1, 0, 1],
-                    [0, 0, 1, 0]];
+        const seed = [[1, 1, 1, 0],
+                      [0, 1, 1, 0],
+                      [0, 1, 0, 1],
+                      [0, 0, 1, 0]];
 
-        let expectedField = [[1, 0, 1, 0],
-                             [0, 0, 0, 1],
-                             [0, 1, 0, 1],
-                             [0, 0, 1, 0]];
+        const expectedField = [[1, 0, 1, 0],
+                               [0, 0, 0, 1],
+                               [0, 1, 0, 1],
+                               [0, 0, 1, 0]];
 
         expect(Tick.nextTick(seed)).toEqual(expectedField);
     });
@@ -294,24 +294,24 @@ describe("field() tests:", () => {
     });
 
     it("checkFieldsEqual(): with 2 fields that are equal ", () => {
-        let field = [[0, 0, 0, 0],
-                     [0, 0, 1, 0],
-                     [0, 1, 0, 1],
-                     [0, 0, 1, 0]];
+        const field = [[0, 0, 0, 0],
+                       [0, 0, 1, 0],
+                       [0, 1, 0, 1],
+                       [0, 0, 1, 0]];
 
         expect(Field.checkFieldsEqual(field, field)).toEqual(true);
     });
 
     it("checkFieldsEqual(): with 2 fields that are NOT equal", () => {
-        let field = [[0, 0, 0, 0],
-                     [0, 0, 1, 0],
-                     [0, 1, 0, 1],
-                     [0, 0, 1, 0]];
+        const field = [[0, 0, 0, 0],
+                       [0, 0, 1, 0],
+                       [0, 1, 0, 1],
+                       [0, 0, 1, 0]];
 
-        let field2 = [[0, 0, 1, 0],
-                      [0, 1, 1, 0],
-                      [0, 1, 0, 1],
-                      [0, 0, 1, 0]];
+        const field2 = [[0, 0, 1, 0],
+                        [0, 1, 1, 0],
+                        [0, 1, 0, 1],
+                        [0, 0, 1, 0]];
 
         expect(Field.checkFieldsEqual(field, field2)).toEqual(false);
     });
