@@ -56,7 +56,7 @@ function drawField(field) {
     for (let i = 0; i < field.length; i++) {
         console.log(field[i]);
     }
-    sleep(1000);
+    sleep(10);
     for (let i = 0; i < field.length; i++) {
         process.stdout.write("---");
 
