@@ -56,14 +56,17 @@ function sleep(sleepDuration) {
 function drawField(field) {
     Clear();
     for (let i = 0; i < field.length; i++) {
-        console.log(field[i]);
-    }
-    sleep(500);
-    for (let i = 0; i < field.length; i++) {
-        process.stdout.write("---");
+        for (let j = 0; j < field[i].length; j++){
+            if (field[i][j] === 0 ) {
+                process.stdout.write(" ");
+            } else{
+                process.stdout.write("*");
+            }
+        }
+        console.log("");
 
     }
-    console.log("--");
+    sleep(500);
 }
 
 module.exports = {
