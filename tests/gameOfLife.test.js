@@ -1,7 +1,8 @@
 "use strict";
 
 const GameOfLife = require("gameOfLife"),
-    Field = require("field");
+    Field = require("field"),
+    Tick = require("tick");
 
 console.log = jest.fn(function() {
 });
@@ -116,6 +117,23 @@ describe("gameOfLife() tests:", () => {
         Field.generateField = generateFieldUnmocker;
     });
 
+    it("if field is not dead and (newField != field) new field must be generated and returned", () => {
+        let seed = [[1, 1],
+                    [0, 0]];
+
+        let expectedField = [[0, 0],
+                             [0, 0]];
+
+        let drawFieldUnmocker = Field.drawField;
+        Field.drawField = jest.fn(function() {
+        });
+
+        GameOfLife.gameOfLife(2, seed);
+        expect(Field.drawField).toHaveBeenLastCalledWith(expectedField);
+
+        Field.drawField = drawFieldUnmocker;
+    });
+
     it("starting without initial seed should generate a new field", () => {
         let field = [[0, 0, 0, 0, 0, 0],
                      [0, 1, 1, 0, 0, 0],
@@ -144,8 +162,126 @@ describe("gameOfLife() tests:", () => {
 
 
 describe("tick() tests:", () => {
-    it("...", () => {
+    it("nextTick() should call all subfunctions/checks", () => {
+        //this test just gives me more coverage on nextTick() logic:
+        // isLonely(), isSupported(), isOverpopulated(), isResurrected()
+        let seed = [[1, 1, 1, 0],
+                    [0, 1, 1, 0],
+                    [0, 1, 0, 1],
+                    [0, 0, 1, 0]];
 
+        let expectedField = [[1, 0, 1, 0],
+                             [0, 0, 0, 1],
+                             [0, 1, 0, 1],
+                             [0, 0, 1, 0]];
+
+        expect(Tick.nextTick(seed)).toEqual(expectedField);
+    });
+
+    describe("liveCellsAround() tests:", () => {
+        it("cell is in top left corner", () => {
+            const field = [[1, 1, 0],
+                           [0, 0, 1],
+                           [0, 0, 1]];
+            const x = 0;
+            const y = 0;
+
+            expect(Tick.liveCellsAround(field, x, y)).toEqual(1);
+        });
+
+        it("cell is in top left corner", () => {
+            const field = [[1, 0, 1],
+                           [1, 1, 1],
+                           [1, 1, 1]];
+            const expectedField = [[1, 0, 1],
+                                   [0, 0, 0],
+                                   [1, 0, 1]];
+            const x = 0;
+            const y = 0;
+
+            expect(Tick.nextTick(field)).toEqual(expectedField);
+            expect(Tick.liveCellsAround(field, x, y)).toEqual(2);
+        });
+
+        it("cell is in top right corner", () => {
+            const field = [[1, 1, 0],
+                           [0, 0, 1],
+                           [0, 0, 1]];
+            const x = 0;
+            const y = 2;
+
+            expect(Tick.liveCellsAround(field, x, y)).toEqual(2);
+        });
+
+        it("cell is in top border, not corner", () => {
+            const field = [[1, 1, 0],
+                           [0, 0, 1],
+                           [0, 0, 1]];
+            const x = 0;
+            const y = 1;
+
+            expect(Tick.liveCellsAround(field, x, y)).toEqual(2);
+        });
+
+        it("cell is in left border, not corner", () => {
+            const field = [[1, 1, 0],
+                           [0, 0, 1],
+                           [0, 0, 1]];
+            const x = 1;
+            const y = 0;
+
+            expect(Tick.liveCellsAround(field, x, y)).toEqual(2);
+        });
+
+        it("cell is in the right border, not corner", () => {
+            const field = [[1, 1, 0],
+                           [0, 0, 1],
+                           [0, 0, 1]];
+            const x = 1;
+            const y = 2;
+
+            expect(Tick.liveCellsAround(field, x, y)).toEqual(2);
+        });
+
+        it("cell is in the bottom, not corner", () => {
+            const field = [[1, 1, 0],
+                           [0, 0, 1],
+                           [0, 0, 1]];
+            const x = 2;
+            const y = 1;
+
+            expect(Tick.liveCellsAround(field, x, y)).toEqual(2);
+        });
+
+        it("cell is in the bottom right corner", () => {
+            const field = [[1, 1, 0],
+                           [0, 0, 1],
+                           [0, 0, 1]];
+            const x = 2;
+            const y = 2;
+
+            expect(Tick.liveCellsAround(field, x, y)).toEqual(1);
+        });
+
+        it("cell is in the bottom left corner", () => {
+            const field = [[1, 1, 0],
+                           [0, 0, 1],
+                           [0, 0, 1]];
+            const x = 2;
+            const y = 0;
+
+            expect(Tick.liveCellsAround(field, x, y)).toEqual(0);
+        });
+
+        it("cell is in the middle", () => {
+            const field = [[1, 1, 0],
+                           [0, 0, 1],
+                           [0, 0, 1]];
+            const x = 1;
+            const y = 1;
+
+            expect(Tick.liveCellsAround(field, x, y)).toEqual(4);
+        });
     });
 });
 

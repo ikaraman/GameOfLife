@@ -94,7 +94,7 @@ function liveCellsAround(field, x, y) {
                 count = checkBottom(field, x, y) +
                         checkRightBottom(field, x, y) +
                         checkRight(field, x, y);
-            } else if (y === field.length - 1) {
+            } else {
                 //cell is on top right corner
                 count = checkLeft(field, x, y) +
                         checkLeftBottom(field, x, y) +
@@ -104,7 +104,7 @@ function liveCellsAround(field, x, y) {
 
         //cell touching bottom border
         if (x === field.length - 1) {
-            if (y !== 0 || (y !== field.length - 1)) {
+            if (y !== 0 && y !== field.length - 1) {
                 //cell is on bottom border but not in a corner
                 count = checkTop(field, x, y) +
                         checkLeftTop(field, x, y) +
@@ -116,7 +116,7 @@ function liveCellsAround(field, x, y) {
                 count = checkTop(field, x, y) +
                         checkRightTop(field, x, y) +
                         checkRight(field, x, y);
-            } else if (y === field.length - 1) {
+            } else {
                 //cell is on bottom right corner
                 count = checkLeft(field, x, y) +
                         checkLeftTop(field, x, y) +
@@ -158,12 +158,13 @@ function isSupported(field, x, y) {
         return true;
     }
 }
-function isOverpopulated(field, x, y) {
-    const liveCells = liveCellsAround(field, x, y);
-    if (liveCells > 3) {
-        return true;
-    }
-}
+//code refactored, no need for this function, temporarily commented
+//function isOverpopulated(field, x, y) {
+    // const liveCells = liveCellsAround(field, x, y);
+    // if (liveCells > 3) {
+    //     return true;
+    // }
+//}
 function isResurrected(field, x, y) {
     const liveCells = liveCellsAround(field, x, y);
     if (liveCells === 3) {
@@ -186,7 +187,8 @@ function nextTick(field) {
                     newField[i][j] = 0;
                 } else if (isSupported(field, i, j) === true) {
                     newField[i][j] = 1;
-                } else if (isOverpopulated(field, i, j) === true) {
+                } else {
+                    //cell is overpopulated and will die, it's the only possibility left
                     newField[i][j] = 0;
                 }
             }
@@ -198,5 +200,6 @@ function nextTick(field) {
 
 
 module.exports = {
-    nextTick: nextTick
+    nextTick: nextTick,
+    liveCellsAround: liveCellsAround
 };
