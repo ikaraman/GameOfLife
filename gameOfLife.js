@@ -30,13 +30,8 @@ function gameOfLife(fieldSize, seedField) {
     }
 }
 
-//let seed = [[0,1,0],[1,0,1],[0,1,0]];
-//gameOfLife(3);
-
-// isLonely() - Any live cell with fewer than two live neighbours dies, as if caused by underpopulation.
-// isSupported() - Any live cell with two or three live neighbours lives on to the next generation.
-// isOverpopulated() - Any live cell with more than three live neighbours dies, as if by overpopulation.
-// isResurrected() - Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
+// let seed = [[0,1,0],[0,1,0],[0,1,0]];
+// gameOfLife(3, seed);
 
 module.exports = {
     gameOfLife: gameOfLife
