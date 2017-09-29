@@ -20,6 +20,15 @@ function generateWorld(worldSize, seed) {
     return world;
 }
 
+function isProperWorldSize(worldSize) {
+    let result = (worldSize < 2) ? false : true;
+
+    if (!result) {
+        console.log("World size cannot be less than 2. Execution will stop.");
+    }
+
+    return result;
+}
 
 function checkIsWorldAlive(world) {
 
@@ -31,7 +40,7 @@ function checkIsWorldAlive(world) {
             }
         }
     }
-    console.log("There is no more alive cells");
+    console.log("There is no more cells alive.");
     return false;
 }
 
@@ -65,12 +74,13 @@ function drawWorld(world, tickTime) {
         }
         console.log("");
     }
-    sleep(tickTime);
+    sleep(tickTime === undefined ? 1 : tickTime);
 }
 
 module.exports = {
     generateWorld: generateWorld,
     checkIsWorldAlive: checkIsWorldAlive,
     isNextGenerationEqual: isNextGenerationEqual,
-    drawWorld: drawWorld
+    drawWorld: drawWorld,
+    isProperWorldSize: isProperWorldSize
 };
