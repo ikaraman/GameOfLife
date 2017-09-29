@@ -6,23 +6,20 @@ const tick = require("./tick"),
 
 
 function gameOfLife(worldSize, seed, tickTime) {
-    if (worldSize < 2) {
-        console.log("World size cannot be less than 2. Execution will stop.");
+    if (!world.isProperWorldSize(worldSize)) {
         return false;
     }
 
     let newWorld = world.generateWorld(worldSize, seed);
-    world.drawWorld(newWorld, tickTime);
 
     while (true) {
+        world.drawWorld(newWorld, tickTime);
         if (world.checkIsWorldAlive(newWorld)) {
-            //console.log("One more tick will happen...");
             if (world.isNextGenerationEqual(newWorld, tick.nextTick(newWorld))) {
-                console.log("Execution will stop. New world is the same as a previous one");
+                console.log("Execution will stop. New world is the same as the previous one");
                 break;
             } else {
                 newWorld = clone(tick.nextTick(newWorld));
-                world.drawWorld(newWorld, tickTime);
             }
         } else {
             break;
