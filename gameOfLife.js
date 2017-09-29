@@ -1,28 +1,28 @@
 "use strict";
 
-const Tick = require("./tick"),
-    Field = require("./field"),
-    Clone = require("clone");
+const tick = require("./tick"),
+    world = require("./world"),
+    clone = require("clone");
 
 
-function gameOfLife(fieldSize, seedField) {
-    if (fieldSize < 2) {
-        console.log("Field size cannot be less than 2. Execution will stop.");
+function gameOfLife(worldSize, seed, tickTime) {
+    if (worldSize < 2) {
+        console.log("World size cannot be less than 2. Execution will stop.");
         return false;
     }
 
-    let newField = Field.generateField(fieldSize, seedField);
-    Field.drawField(newField);
+    let newWorld = world.generateWorld(worldSize, seed);
+    world.drawWorld(newWorld, tickTime);
 
     while (true) {
-        if (Field.checkIsFieldAlive(newField)) {
+        if (world.checkIsWorldAlive(newWorld)) {
             //console.log("One more tick will happen...");
-            if (Field.checkFieldsEqual(newField, Tick.nextTick(newField))) {
-                console.log("Execution will stop. New field is the same as a previous one");
+            if (world.isNextGenerationEqual(newWorld, tick.nextTick(newWorld))) {
+                console.log("Execution will stop. New world is the same as a previous one");
                 break;
             } else {
-                newField = Clone(Tick.nextTick(newField));
-                Field.drawField(newField);
+                newWorld = clone(tick.nextTick(newWorld));
+                world.drawWorld(newWorld, tickTime);
             }
         } else {
             break;
@@ -30,8 +30,29 @@ function gameOfLife(fieldSize, seedField) {
     }
 }
 
-// let seed = [[0,1,0],[0,1,0],[0,1,0]];
-// gameOfLife(3, seed);
+ // let seed = [
+ //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+ //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+ //     [0,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,0],
+ //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+ //     [0,0,1,0,0,0,0,1,0,1,0,0,0,0,1,0,0],
+ //     [0,0,1,0,0,0,0,1,0,1,0,0,0,0,1,0,0],
+ //     [0,0,1,0,0,0,0,1,0,1,0,0,0,0,1,0,0],
+ //     [0,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,0],
+ //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+ //     [0,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,0],
+ //     [0,0,1,0,0,0,0,1,0,1,0,0,0,0,1,0,0],
+ //     [0,0,1,0,0,0,0,1,0,1,0,0,0,0,1,0,0],
+ //     [0,0,1,0,0,0,0,1,0,1,0,0,0,0,1,0,0],
+ //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+ //     [0,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,0],
+ //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+ //     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+ // ];
+ // //
+ //  gameOfLife(17, seed, 500);
+//gameOfLife(30);
+//gameOfLife(3);
 
 module.exports = {
     gameOfLife: gameOfLife
