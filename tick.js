@@ -9,168 +9,160 @@ const clone = require("clone");
 
 //challenge: remove all comments, all function size: 10 lines max, idiot-proof naming
 
-function checkLeftTop(world, x, y) {
-    if (world[x - 1][y - 1] === 1) {
-        return 1;
-    } else {
-        return 0;
-    }
+function aliveCellsAroundMiddleCell(world, x, y) {
+    return world[x - 1][y - 1] +
+        world[x][y - 1] +
+        world[x + 1][y - 1] +
+        world[x - 1][y] +
+        world[x + 1][y] +
+        world[x - 1][y + 1] +
+        world[x][y + 1] +
+        world[x + 1][y + 1];
 }
-function checkLeft(world, x, y) {
-    if (world[x][y - 1] === 1) {
-        return 1;
-    } else {
-        return 0;
-    }
+function aliveCellsAroundTopLeftCell(world, x, y) {
+    return world[1][1] +
+        world[0][1] +
+        world[1][0];
 }
-function checkLeftBottom(world, x, y) {
-    if (world[x + 1][y - 1] === 1){
-        return 1;
-    } else {
-        return 0;
-    }
+function aliveCellsAroundTopRightCell(world, x, y) {
+    return world[x][y - 1] +
+        world[x + 1][y - 1] +
+        world[x + 1][y];
 }
-function checkTop(world, x, y) {
-    if (world[x - 1][y] === 1){
-        return 1;
-    } else {
-        return 0;
-    }
+function aliveCellsAroundTopMiddleCell(world, x, y) {
+    return world[x][y - 1] +
+        world[x][y + 1] +
+        world[x + 1][y - 1] +
+        world[x + 1][y] +
+        world[x + 1][y + 1];
 }
-function checkBottom(world, x, y) {
-    if (world[x + 1][y] === 1) {
-        return 1;
-    } else {
-        return 0;
-    }
+function aliveCellsAroundBottomLeftCell(world, x, y) {
+    return world[x - 1][y] +
+        world[x - 1][y + 1] +
+        world[x][y + 1];
 }
-function checkRightTop(world, x, y) {
-    if (world[x - 1][y + 1] === 1) {
-        return 1;
-    } else {
-        return 0;
-    }
+function aliveCellsAroundBottomRightCell(world, x, y) {
+    return world[x - 1][y] +
+        world[x - 1][y - 1] +
+        world[x][y - 1];
 }
-function checkRight(world, x, y) {
-    if (world[x][y + 1] === 1) {
-        return 1;
-    } else {
-        return 0;
-    }
+function aliveCellsAroundBottomMiddleCell(world, x, y) {
+    return world[x][y - 1] +
+        world[x][y + 1] +
+        world[x - 1][y - 1] +
+        world[x - 1][y] +
+        world[x - 1][y + 1];
 }
-function checkRightBottom(world, x, y) {
-    if (world[x + 1][y + 1] === 1) {
-        return 1;
-    } else {
-        return 0;
-    }
+function aliveCellsAroundLeftMiddleCell(world, x, y) {
+    return world[x - 1][y] +
+        world[x + 1][y] +
+        world[x - 1][y + 1] +
+        world[x][y + 1] +
+        world[x + 1][y + 1];
+}
+function aliveCellsAroundRightMiddleCell(world, x, y) {
+    return world[x - 1][y] +
+        world[x + 1][y] +
+        world[x - 1][y - 1] +
+        world[x][y - 1] +
+        world[x + 1][y - 1];
 }
 
+function cellPosition(world, x, y){
+    let position = "Unknown";
+
+    position = ((x !== 0) && (x !== world.length - 1)) && ((y !== 0) && (y !== world.length - 1)) ? "Middle" : position;
+    position = (x === 0 && y === 0) ? "Top Left" : position;
+    position = (x === 0 && y === world.length - 1) ? "Top Right" : position;
+    position = (x === 0 && (y !== 0 && y !== world.length - 1)) ? "Top Middle" : position;
+    position = (x === world.length - 1 && y === 0) ? "Bottom Left" : position;
+    position = (x === world.length - 1 && y === world.length - 1) ? "Bottom Right" : position;
+    position = (x === world.length - 1 && y !== 0 && y !== world.length - 1) ? "Bottom Middle" : position;
+    position = (y === 0 && (x !== 0 && (x !== world.length - 1))) ? "Left Middle" : position;
+    position = (y === world.length - 1 && (x !== 0 && (x !== world.length - 1))) ? "Right Middle" : position;
+
+    return position;
+}
 
 function liveCellsAround(world, x, y) {
     let count = 0;
 
-    //check if cell NOT touching the world borders
-    if (((x !== 0) && (x !== world.length - 1)) && ((y !== 0) && (y !== world.length - 1))) {
-        //cell is in the middle
-        count = checkLeftTop(world, x, y) +
-                checkLeft(world, x, y) +
-                checkLeftBottom(world, x, y) +
-                checkTop(world, x, y) +
-                checkBottom(world, x, y) +
-                checkRightTop(world, x, y) +
-                checkRight(world, x, y) +
-                checkRightBottom(world, x, y);
-    } else {
-        //cell touching top border
-        if (x === 0) {
-            if (y !== 0 && y !== world.length - 1) {
-                //cell is on top border but not in a corner
-                count = checkLeft(world, x, y) +
-                        checkLeftBottom(world, x, y) +
-                        checkBottom(world, x, y) +
-                        checkRight(world, x, y) +
-                        checkRightBottom(world, x, y);
-            } else if (y === 0) {
-                //cell is on top left corner
-                count = checkBottom(world, x, y) +
-                        checkRightBottom(world, x, y) +
-                        checkRight(world, x, y);
-            } else {
-                //cell is on top right corner
-                count = checkLeft(world, x, y) +
-                        checkLeftBottom(world, x, y) +
-                        checkBottom(world, x, y);
-            }
-        }
-
-        //cell touching bottom border
-        if (x === world.length - 1) {
-            if (y !== 0 && y !== world.length - 1) {
-                //cell is on bottom border but not in a corner
-                count = checkTop(world, x, y) +
-                        checkLeftTop(world, x, y) +
-                        checkLeft(world, x, y) +
-                        checkRightTop(world, x, y) +
-                        checkRight(world, x, y);
-            } else if ( y === 0) {
-                //cell is on bottom left corner
-                count = checkTop(world, x, y) +
-                        checkRightTop(world, x, y) +
-                        checkRight(world, x, y);
-            } else {
-                //cell is on bottom right corner
-                count = checkLeft(world, x, y) +
-                        checkLeftTop(world, x, y) +
-                        checkTop(world, x, y);
-            }
-        }
-
-        //other (left/right border, not corner)
-        if (y === 0 && (x !== 0 && (x !== world.length - 1))) {
-            //cell is on left border but not in a corners
-            count = checkTop(world, x, y) +
-                    checkBottom(world, x, y) +
-                    checkRightTop(world, x, y) +
-                    checkRight(world, x, y) +
-                    checkRightBottom(world, x, y);
-        }
-        if ((y === world.length - 1) && (x !== 0 && x !== world.length - 1)) {
-            //cell is on right border but not in the corners
-            count = checkLeftTop(world, x, y) +
-                    checkLeft(world, x, y) +
-                    checkLeftBottom(world, x, y) +
-                    checkTop(world, x, y) +
-                    checkBottom(world, x, y);
-        }
+    switch (cellPosition(world, x, y)){
+        case "Middle":
+            count = aliveCellsAroundMiddleCell(world, x, y);
+            break;
+        case "Top Left":
+            count = aliveCellsAroundTopLeftCell(world, x, y);
+            break;
+        case "Top Right":
+            count = aliveCellsAroundTopRightCell(world, x, y);
+            break;
+        case "Top Middle":
+            count = aliveCellsAroundTopMiddleCell(world, x, y);
+            break;
+        case "Bottom Left":
+            count = aliveCellsAroundBottomLeftCell(world, x, y);
+            break;
+        case "Bottom Right":
+            count = aliveCellsAroundBottomRightCell(world, x, y);
+            break;
+        case "Bottom Middle":
+            count = aliveCellsAroundBottomMiddleCell(world, x, y);
+            break;
+        case "Left Middle":
+            count = aliveCellsAroundLeftMiddleCell(world, x, y);
+            break;
+        case "Right Middle":
+            count = aliveCellsAroundRightMiddleCell(world, x, y);
+            break;
     }
+
     return count;
 }
 
 
-function isLonely(world, x, y) {
-    const liveCells = liveCellsAround(world, x, y);
-    if (liveCells < 2) {
+function ifCellLonely(world, x, y) {
+    if (liveCellsAround(world, x, y) < 2) {
         return true;
+    } else {
+        return false;
     }
 }
-function isSupported(world, x, y) {
-    const liveCells = liveCellsAround(world, x, y);
-    if (liveCells === 2 || liveCells === 3) {
+function ifCellSupported(world, x, y) {
+    if (liveCellsAround(world, x, y) === 2 || liveCellsAround(world, x, y) === 3) {
         return true;
+    } else {
+        return false;
     }
 }
-//code refactored, no need for this function, temporarily commented
-//function isOverpopulated(world, x, y) {
-    // const liveCells = liveCellsAround(world, x, y);
-    // if (liveCells > 3) {
-    //     return true;
-    // }
-//}
-function isSpawned(world, x, y) {
-    const liveCells = liveCellsAround(world, x, y);
-    if (liveCells === 3) {
+function ifCellOverpopulated(world, x, y) {
+    if (liveCellsAround(world, x, y) > 3) {
         return true;
+    } else {
+        return false;
+    }
+}
+function ifThreeNeighbours(world, x, y) {
+    if (liveCellsAround(world, x, y) === 3) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function live(toLive, newWorld, x, y) {
+    if (toLive) {
+        newWorld[x][y] = 1;
+    }
+}
+function die(toDie, newWorld, x, y) {
+    if (toDie) {
+        newWorld[x][y] = 0;
+    }
+}
+function spawn(toSpawn, newWorld, x, y) {
+    if (toSpawn) {
+        newWorld[x][y] = 1;
     }
 }
 
@@ -178,25 +170,14 @@ function isSpawned(world, x, y) {
 function nextTick(world) {
     let newWorld = clone(world);
 
-    for (let i = 0; i < world.length; i++) {
-        for (let j = 0; j < world.length; j++) {
-            if (world[i][j] === 0) {
-                if (isSpawned(world, i, j) === true){
-                    //resurrect()
-                    newWorld[i][j] = 1;
-                }
+    for (let x = 0; x < world.length; x++) {
+        for (let y = 0; y < world.length; y++) {
+            if (world[x][y] === 0) {
+                    spawn(ifThreeNeighbours(world, x, y), newWorld, x, y);
             } else {
-                if (isLonely(world, i, j) === true) {
-                    //die()
-                    newWorld[i][j] = 0;
-                } else if (isSupported(world, i, j) === true) {
-                    //live()
-                    newWorld[i][j] = 1;
-                } else {
-                    //cell is overpopulated and will die, it's the only possibility left
-                    //dieDueToOverpopulation
-                    newWorld[i][j] = 0;
-                }
+                die(ifCellLonely(world, x, y), newWorld, x, y);
+                die(ifCellOverpopulated(world, x, y), newWorld, x, y);
+                live(ifCellSupported(world, x, y), newWorld, x, y);
             }
         }
     }
