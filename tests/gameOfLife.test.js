@@ -18,7 +18,7 @@ describe("World-based tests", () => {
 
 
             gameOfLife.gameOfLife(4, seed);
-            expect(console.log).toHaveBeenLastCalledWith("Execution will stop. New world is the same as a previous one");
+            expect(console.log).toHaveBeenLastCalledWith("Execution will stop. New world is the same as the previous one");
         });
 
         it("block should stop execution without ticking (small world)", () => {
@@ -26,7 +26,7 @@ describe("World-based tests", () => {
                         [1, 1]];
 
             gameOfLife.gameOfLife(2, seed);
-            expect(console.log).toHaveBeenLastCalledWith("Execution will stop. New world is the same as a previous one");
+            expect(console.log).toHaveBeenLastCalledWith("Execution will stop. New world is the same as the previous one");
         });
 
         it("beehive should stop execution without ticking", () => {
@@ -38,7 +38,7 @@ describe("World-based tests", () => {
                           [0, 0, 0, 0, 0, 0]];
 
             gameOfLife.gameOfLife(6, seed);
-            expect(console.log).toHaveBeenLastCalledWith("Execution will stop. New world is the same as a previous one");
+            expect(console.log).toHaveBeenLastCalledWith("Execution will stop. New world is the same as the previous one");
         });
 
         it("loaf should stop execution without ticking", () => {
@@ -50,7 +50,7 @@ describe("World-based tests", () => {
                           [0, 0, 0, 0, 0, 0]];
 
             gameOfLife.gameOfLife(6, seed);
-            expect(console.log).toHaveBeenLastCalledWith("Execution will stop. New world is the same as a previous one");
+            expect(console.log).toHaveBeenLastCalledWith("Execution will stop. New world is the same as the previous one");
         });
 
         it("boat should stop execution without ticking", () => {
@@ -62,7 +62,7 @@ describe("World-based tests", () => {
                           [0, 0, 0, 0, 0, 0]];
 
             gameOfLife.gameOfLife(6, seed);
-            expect(console.log).toHaveBeenLastCalledWith("Execution will stop. New world is the same as a previous one");
+            expect(console.log).toHaveBeenLastCalledWith("Execution will stop. New world is the same as the previous one");
         });
 
         it("tub should stop execution without ticking", () => {
@@ -72,7 +72,7 @@ describe("World-based tests", () => {
                          [0, 0, 1, 0]];
 
             gameOfLife.gameOfLife(4, seed);
-            expect(console.log).toHaveBeenLastCalledWith("Execution will stop. New world is the same as a previous one");
+            expect(console.log).toHaveBeenLastCalledWith("Execution will stop. New world is the same as the previous one");
         });
     });
 
@@ -119,8 +119,8 @@ describe("World-based tests", () => {
 });
 
 
-describe("gameOfLife() tests:", () => {
-    it("empty world should stop the execution", () => {
+describe("gameOfLife() function:", () => {
+    it("should stop the execution with an empty world seed", () => {
         const seed = [];
 
         const generateWorldUnmocker = world.generateWorld;
@@ -129,17 +129,17 @@ describe("gameOfLife() tests:", () => {
         });
 
         gameOfLife.gameOfLife(3, seed);
-        expect(console.log).toHaveBeenLastCalledWith("There is no more alive cells");
+        expect(console.log).toHaveBeenLastCalledWith("There is no more cells alive.");
         expect(world.generateWorld).toHaveBeenLastCalledWith(3, seed);
 
         world.generateWorld = generateWorldUnmocker;
     });
 
-    it("world size not matching the seed size should be handled gracefully", () => {
+    it("should handle gracefully when world size not matching the seed size ", () => {
         expect(console.log).toHaveBeenLastCalledWith("This test is to be developed");
     });
 
-    it("if world is not dead and (newWorld != world) new world must be generated and returned", () => {
+    it("should generate and return new world if world is not dead and (newWorld != world) ", () => {
         const seed = [
             [1, 1],
             [0, 0]];
@@ -158,7 +158,7 @@ describe("gameOfLife() tests:", () => {
         world.drawWorld = drawWorldUnmocker;
     });
 
-    it("starting without initial seed should generate a new world", () => {
+    it("should generate a new world when being run without initial seed", () => {
         const generateWorldUnmocker = world.generateWorld;
         world.generateWorld = jest.fn(function() {
             return world;
@@ -170,7 +170,7 @@ describe("gameOfLife() tests:", () => {
         world.generateWorld = generateWorldUnmocker;
     });
 
-    it("calling game of life with size < 2 world should not be allowed", () => {
+    it("should stop execution if being called with world size < 2", () => {
         gameOfLife.gameOfLife(1);
 
         expect(console.log).toHaveBeenLastCalledWith("World size cannot be less than 2. Execution will stop.");
