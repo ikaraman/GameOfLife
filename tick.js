@@ -173,7 +173,7 @@ function nextTick(world) {
     for (let x = 0; x < world.length; x++) {
         for (let y = 0; y < world.length; y++) {
             if (world[x][y] === 0) {
-                    spawn(ifThreeNeighbours(world, x, y), newWorld, x, y);
+                spawn(ifThreeNeighbours(world, x, y), newWorld, x, y);
             } else {
                 die(ifCellLonely(world, x, y), newWorld, x, y);
                 die(ifCellOverpopulated(world, x, y), newWorld, x, y);
