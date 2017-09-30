@@ -5,27 +5,72 @@ const clone = require("clone"),
 
 
 function isProperWorldSize(worldSize) {
-    let isSizeOK = (worldSize < 2) ? false : true;
-    let isSizeTypeOK = sdfdsf;
-
-    if (!isSizeOK) {
-        console.log("World size cannot be less than 2. Execution will stop.");
+    if (worldSize < 2) {
+        console.log("World size cannot be less than 2.");
+        return false;
     }
 
-    return isSizeOK;
+    if (typeof worldSize !== "number" || (worldSize % 1) !== 0) {
+        console.log("World size should be integer.");
+        return false;
+    }
+
+    return true;
+}
+
+function isSeedCellValuesCorrect(seed) {
+    if (seed !== undefined) {
+        for (let x = 0; x < seed.length; x++) {
+            for (let y = 0; y < seed.length; y++){
+                if (seed[x][y] !== 1) {
+                    if (seed[x][y] !== 0) {
+                        console.log("Seed array should only contain 0's or 1's");
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+
+    return true;
 }
 
 function isProperSeed(worldSize, seed) {
-    dfgdfg
+    if (seed === undefined) {
+        return true;
+    }
+
+    if (worldSize !== seed.length) {
+        console.log("World size is different from seed size.");
+        return false;
+    }
+
+    if (seed.constructor !== Array || seed[0].constructor !== Array || seed[0].length !== worldSize) {
+        console.log("Seed should be an array of arrays matching size of the world.");
+        return false;
+    }
+
+    return true;
 }
 
 function isProperTickTime(tickTime) {
-    sdfsdf
+    if (tickTime === undefined) {
+        return true;
+    }
+
+    if (typeof tickTime !== "number" || (tickTime % 1) !== 0) {
+        console.log("Tick time should be integer (ms).");
+        return false;
+    }
+
+    return true;
 }
 
 function validateWorldParameters(worldSize, seed, tickTime) {
     let isWorldSizeOK = isProperWorldSize(worldSize);
-    let isSeedOK = isProperSeed(worldSize, seed);
+    let isSeedOK =
+        isProperSeed(worldSize, seed) &&
+        isSeedCellValuesCorrect(seed);
     let isTickTimeOK = isProperTickTime(tickTime);
 
     let areParametersOK = isWorldSizeOK && isSeedOK && isTickTimeOK;

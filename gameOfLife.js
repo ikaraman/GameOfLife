@@ -7,6 +7,7 @@ const tick = require("./tick"),
 
 function gameOfLife(worldSize, seed, tickTime) {
     if (!world.validateWorldParameters(worldSize, seed, tickTime)) {
+        console.log("World parameters are incorrect. Execution will stop.");
         return false;
     }
 
