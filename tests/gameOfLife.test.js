@@ -138,10 +138,6 @@ describe("gameOfLife() function:", () => {
         world.generateWorld = generateWorldUnmocker;
     });
 
-    it("should handle gracefully when world size not matching the seed size ", () => {
-        expect(console.log).toHaveBeenLastCalledWith("This test is to be developed");
-    });
-
     it("should generate and return new world if world is not dead and (newWorld != world) ", () => {
         const seed = [
             [1, 1],
