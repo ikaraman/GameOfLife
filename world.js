@@ -8,10 +8,10 @@ function generateWorld(worldSize, seed) {
     if (seed === undefined) {
         world = [];
 
-        for (let i = 0; i < worldSize; i++) {
-            world[i] = [];
-            for (let j = 0; j < worldSize; j++){
-                world[i][j] = Math.round(Math.random());
+        for (let x = 0; x < worldSize; x++) {
+            world[x] = [];
+            for (let y = 0; y < worldSize; y++){
+                world[x][y] = Math.round(Math.random());
             }
         }
     } else {
@@ -21,21 +21,19 @@ function generateWorld(worldSize, seed) {
 }
 
 function isProperWorldSize(worldSize) {
-    let result = (worldSize < 2) ? false : true;
+    let isSizeOK = (worldSize < 2) ? false : true;
 
-    if (!result) {
+    if (!isSizeOK) {
         console.log("World size cannot be less than 2. Execution will stop.");
     }
 
-    return result;
+    return isSizeOK;
 }
 
 function checkIsWorldAlive(world) {
-
-    for (let i = 0; i < world.length; i++) {
-        for (let j = 0; j < world.length; j++){
-            if (world[i][j] === 1) {
-                //console.log("Some cells are alive");
+    for (let x = 0; x < world.length; x++) {
+        for (let y = 0; y < world.length; y++){
+            if (world[x][y] === 1) {
                 return true;
             }
         }
@@ -45,9 +43,9 @@ function checkIsWorldAlive(world) {
 }
 
 function isNextGenerationEqual(world, newWorld) {
-    for (let i = 0; i < world.length; i++) {
-        for (let j = 0; j < world.length; j++) {
-            if (world[i][j] !== newWorld[i][j]) {
+    for (let x = 0; x < world.length; x++) {
+        for (let y = 0; y < world.length; y++) {
+            if (world[x][y] !== newWorld[x][y]) {
                 return false;
             }
         }
@@ -64,9 +62,9 @@ function sleep(sleepDuration) {
 
 function drawWorld(world, tickTime) {
     clear();
-    for (let i = 0; i < world.length; i++) {
-        for (let j = 0; j < world[i].length; j++){
-            if (world[i][j] === 0 ) {
+    for (let x = 0; x < world.length; x++) {
+        for (let y = 0; y < world[x].length; y++){
+            if (world[x][y] === 0 ) {
                 process.stdout.write(" ");
             } else{
                 process.stdout.write("*");
