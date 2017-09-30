@@ -121,7 +121,10 @@ describe("World-based tests", () => {
 
 describe("gameOfLife() function:", () => {
     it("should stop the execution with an empty world seed", () => {
-        const seed = [];
+        const seed = [
+            [0,0,0],
+            [0,0,0],
+            [0,0,0]];
 
         const generateWorldUnmocker = world.generateWorld;
         world.generateWorld = jest.fn(function() {
@@ -173,7 +176,7 @@ describe("gameOfLife() function:", () => {
     it("should stop execution if being called with world size < 2", () => {
         gameOfLife.gameOfLife(1);
 
-        expect(console.log).toHaveBeenLastCalledWith("World size cannot be less than 2. Execution will stop.");
+        expect(console.log).toHaveBeenLastCalledWith("World parameters are incorrect. Execution will stop.");
     });
 });
 
