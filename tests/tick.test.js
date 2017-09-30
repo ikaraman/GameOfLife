@@ -9,12 +9,14 @@ describe("tick() tests:", () => {
     it("nextTick() should call all subfunctions/checks", () => {
         //this test just gives me more coverage on nextTick() logic:
         // isLonely(), isSupported(), isOverpopulated(), isResurrected()
-        const seed = [[1, 1, 1, 0],
+        const seed = [
+            [1, 1, 1, 0],
             [0, 1, 1, 0],
             [0, 1, 0, 1],
             [0, 0, 1, 0]];
 
-        const expectedWorld = [[1, 0, 1, 0],
+        const expectedWorld = [
+            [1, 0, 1, 0],
             [0, 0, 0, 1],
             [0, 1, 0, 1],
             [0, 0, 1, 0]];
@@ -24,7 +26,8 @@ describe("tick() tests:", () => {
 
     describe("liveCellsAround() tests:", () => {
         it("should properly calculate quantity of live cells nearby when cell is in top left corner", () => {
-            const world = [[1, 1, 0],
+            const world = [
+                [1, 1, 0],
                 [0, 0, 1],
                 [0, 0, 1]];
             const x = 0;
@@ -34,10 +37,12 @@ describe("tick() tests:", () => {
         });
 
         it("should properly calculate quantity of live cells nearby when cell is in top left corner", () => {
-            const world = [[1, 0, 1],
+            const world = [
+                [1, 0, 1],
                 [1, 1, 1],
                 [1, 1, 1]];
-            const expectedWorld = [[1, 0, 1],
+            const expectedWorld = [
+                [1, 0, 1],
                 [0, 0, 0],
                 [1, 0, 1]];
             const x = 0;
@@ -48,7 +53,8 @@ describe("tick() tests:", () => {
         });
 
         it("should properly calculate quantity of live cells nearby when cell is in top right corner", () => {
-            const world = [[1, 1, 0],
+            const world = [
+                [1, 1, 0],
                 [0, 0, 1],
                 [0, 0, 1]];
             const x = 0;
@@ -58,7 +64,8 @@ describe("tick() tests:", () => {
         });
 
         it("should properly calculate quantity of live cells nearby when cell is in top border, not corner", () => {
-            const world = [[1, 1, 0],
+            const world = [
+                [1, 1, 0],
                 [0, 0, 1],
                 [0, 0, 1]];
             const x = 0;
@@ -68,7 +75,8 @@ describe("tick() tests:", () => {
         });
 
         it("should properly calculate quantity of live cells nearby when cell is in left border, not corner", () => {
-            const world = [[1, 1, 0],
+            const world = [
+                [1, 1, 0],
                 [0, 0, 1],
                 [0, 0, 1]];
             const x = 1;
@@ -78,7 +86,8 @@ describe("tick() tests:", () => {
         });
 
         it("should properly calculate quantity of live cells nearby when cell is in the right border, not corner", () => {
-            const world = [[1, 1, 0],
+            const world = [
+                [1, 1, 0],
                 [0, 0, 1],
                 [0, 0, 1]];
             const x = 1;
@@ -88,7 +97,8 @@ describe("tick() tests:", () => {
         });
 
         it("should properly calculate quantity of live cells nearby when cell is in the bottom, not corner", () => {
-            const world = [[1, 1, 0],
+            const world = [
+                [1, 1, 0],
                 [0, 0, 1],
                 [0, 0, 1]];
             const x = 2;
@@ -98,7 +108,8 @@ describe("tick() tests:", () => {
         });
 
         it("should properly calculate quantity of live cells nearby when cell is in the bottom right corner", () => {
-            const world = [[1, 1, 0],
+            const world = [
+                [1, 1, 0],
                 [0, 0, 1],
                 [0, 0, 1]];
             const x = 2;
@@ -108,7 +119,8 @@ describe("tick() tests:", () => {
         });
 
         it("should properly calculate quantity of live cells nearby when cell is in the bottom left corner", () => {
-            const world = [[1, 1, 0],
+            const world = [
+                [1, 1, 0],
                 [0, 0, 1],
                 [0, 0, 1]];
             const x = 2;
@@ -118,7 +130,8 @@ describe("tick() tests:", () => {
         });
 
         it("should properly calculate quantity of live cells nearby when cell is in the middle", () => {
-            const world = [[1, 1, 0],
+            const world = [
+                [1, 1, 0],
                 [0, 0, 1],
                 [0, 0, 1]];
             const x = 1;
