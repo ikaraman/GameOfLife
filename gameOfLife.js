@@ -6,7 +6,7 @@ const tick = require("./tick"),
 
 
 function gameOfLife(worldSize, seed, tickTime) {
-    if (!world.isProperWorldSize(worldSize)) {
+    if (!world.validateWorldParameters(worldSize, seed, tickTime)) {
         return false;
     }
 
@@ -49,7 +49,18 @@ function gameOfLife(worldSize, seed, tickTime) {
  // //
  //  gameOfLife(17, seed, 500);
 //gameOfLife(30);
-//gameOfLife(3);
+//gameOfLife(3, undefined, 500);
+// let seed = [[0, 0, 0, 0, 0],
+//     [0, 0, 1, 0, 0],
+//     [0, 1, 0, 1, 0],
+//     [0, 0, 1, 0, 0],
+//     [0, 0, 0, 0, 0]];
+//
+// let seed = [[0, 0, 0, 0],
+//     [0, 0, 1, 0],
+//     [0, 1, 0, 1],
+//     [0, 0, 1, 0]];
+// gameOfLife(4, seed, 500);
 
 module.exports = {
     gameOfLife: gameOfLife

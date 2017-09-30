@@ -3,6 +3,35 @@
 const clone = require("clone"),
     clear = require("clear");
 
+
+function isProperWorldSize(worldSize) {
+    let isSizeOK = (worldSize < 2) ? false : true;
+    let isSizeTypeOK = sdfdsf;
+
+    if (!isSizeOK) {
+        console.log("World size cannot be less than 2. Execution will stop.");
+    }
+
+    return isSizeOK;
+}
+
+function isProperSeed(worldSize, seed) {
+    dfgdfg
+}
+
+function isProperTickTime(tickTime) {
+    sdfsdf
+}
+
+function validateWorldParameters(worldSize, seed, tickTime) {
+    let isWorldSizeOK = isProperWorldSize(worldSize);
+    let isSeedOK = isProperSeed(worldSize, seed);
+    let isTickTimeOK = isProperTickTime(tickTime);
+
+    let areParametersOK = isWorldSizeOK && isSeedOK && isTickTimeOK;
+    return areParametersOK;
+}
+
 function generateWorld(worldSize, seed) {
     let world;
     if (seed === undefined) {
@@ -18,16 +47,6 @@ function generateWorld(worldSize, seed) {
         world = clone(seed);
     }
     return world;
-}
-
-function isProperWorldSize(worldSize) {
-    let isSizeOK = (worldSize < 2) ? false : true;
-
-    if (!isSizeOK) {
-        console.log("World size cannot be less than 2. Execution will stop.");
-    }
-
-    return isSizeOK;
 }
 
 function checkIsWorldAlive(world) {
@@ -80,5 +99,5 @@ module.exports = {
     checkIsWorldAlive: checkIsWorldAlive,
     isNextGenerationEqual: isNextGenerationEqual,
     drawWorld: drawWorld,
-    isProperWorldSize: isProperWorldSize
+    validateWorldParameters: validateWorldParameters
 };
