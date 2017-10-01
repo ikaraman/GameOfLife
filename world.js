@@ -19,7 +19,7 @@ function isProperWorldSize(worldSize) {
 }
 
 function isSeedCellValuesCorrect(seed) {
-    if (seed !== undefined) {
+    if (seed !== undefined && seed !== null) {
         for (let x = 0; x < seed.length; x++) {
             for (let y = 0; y < seed.length; y++){
                 if (seed[x][y] !== 1) {
@@ -36,7 +36,7 @@ function isSeedCellValuesCorrect(seed) {
 }
 
 function isProperSeed(worldSize, seed) {
-    if (seed === undefined) {
+    if (seed === undefined || seed === null) {
         return true;
     }
 
@@ -54,7 +54,7 @@ function isProperSeed(worldSize, seed) {
 }
 
 function isProperTickTime(tickTime) {
-    if (tickTime === undefined) {
+    if (tickTime === undefined || tickTime === null) {
         return true;
     }
 
@@ -79,7 +79,7 @@ function validateWorldParameters(worldSize, seed, tickTime) {
 
 function generateWorld(worldSize, seed) {
     let world;
-    if (seed === undefined) {
+    if (seed === undefined || seed === null) {
         world = [];
 
         for (let x = 0; x < worldSize; x++) {
@@ -136,7 +136,7 @@ function drawWorld(world, tickTime) {
         }
         console.log("");
     }
-    sleep(tickTime === undefined ? 1 : tickTime);
+    sleep((tickTime === undefined) || (tickTime === null ) ? 1 : tickTime);
 }
 
 module.exports = {
