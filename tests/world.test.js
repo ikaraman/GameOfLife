@@ -5,6 +5,9 @@ const world = require("world");
 console.log = jest.fn(function() {
 });
 
+process.stdout.write = jest.fn(function() {
+});
+
 describe("world() tests:", () => {
     describe("generateWorld()", () => {
         it("should generate a random world when called without a seed", () => {
@@ -13,7 +16,6 @@ describe("world() tests:", () => {
             expect(world.generateWorld(2)).not.toEqual("dfgsdf");
         });
     });
-
 
     describe("isNextGenerationEqual()", () => {
         it("should return TRUE if called with 2 identical worlds", () => {
@@ -40,6 +42,29 @@ describe("world() tests:", () => {
         });
     });
 
+    describe("drawWorld()", () => {
+        it("should draw space if cell value is 0", () => {
+            const seed = [
+                [0,0,0],
+                [0,0,0],
+                [0,0,0]];
+
+            world.drawWorld(seed);
+            expect(process.stdout.write).toHaveBeenLastCalledWith(" ");
+            expect(console.log).toHaveBeenLastCalledWith("");
+        });
+
+        it("should draw asterisk if cell value is 1", () => {
+            const seed = [
+                [1,1,1],
+                [1,1,1],
+                [1,1,1]];
+
+            world.drawWorld(seed);
+            expect(process.stdout.write).toHaveBeenLastCalledWith("*");
+            expect(console.log).toHaveBeenLastCalledWith("");
+        });
+    });
 
     describe("validateWorldParameters()", () => {
         describe("should return false", () => {
@@ -113,39 +138,117 @@ describe("world() tests:", () => {
                     expect(world.validateWorldParameters(worldSize)).toEqual(true);
                 });
             });
+
+            describe("when values in seed parameter are not 0's or 1's", () => {
+                it("but still numbers", () => {
+                    const worldSize = 2;
+                    const seed = [
+                        [1,1],
+                        [2,31]];
+
+                    expect(world.validateWorldParameters(worldSize, seed)).toEqual(false);
+                });
+
+                it("but NOT numbers", () => {
+                    const worldSize = 2;
+                    const seed = [
+                        [1,"test"],
+                        [1,1]];
+
+                    expect(world.validateWorldParameters(worldSize, seed)).toEqual(false);
+                });
+            });
+
+            describe("when seed parameter size is", () => {
+                it("bigger than the world", () => {
+                    const worldSize = 3;
+                    const seed = [
+                        [1,1,0,1],
+                        [1,1,1,0],
+                        [0,1,1,1],
+                        [0,1,1,1]];
+
+                    expect(world.validateWorldParameters(worldSize, seed)).toEqual(false);
+                });
+
+                it("smaller than the world", () => {
+                    const worldSize = 3;
+                    const seed = [
+                        [1,1],
+                        [1,1]];
+
+                    expect(world.validateWorldParameters(worldSize, seed)).toEqual(false);
+                });
+            });
+
+            describe("when seed parameter structure is", () => {
+                describe("incorrect because", () => {
+                    it("it's not an array, but an object", () => {
+                        const worldSize = 3;
+                        const seed = {};
+
+                        expect(world.validateWorldParameters(worldSize, seed)).toEqual(false);
+                    });
+
+                    it("it's not an array, but a string", () => {
+                        const worldSize = 3;
+                        const seed = "test string seed";
+
+                        expect(world.validateWorldParameters(worldSize, seed)).toEqual(false);
+                    });
+
+                    it("it's not an array, but a number", () => {
+                        const worldSize = 3;
+                        const seed = 12345;
+
+                        expect(world.validateWorldParameters(worldSize, seed)).toEqual(false);
+                    });
+
+                    it("incorrect because it's first element is not an array", () => {
+                        const worldSize = 3;
+                        const seed = [
+                            "test first element",
+                            [1,1,0],
+                            [1,1,1]];
+
+                        expect(world.validateWorldParameters(worldSize, seed)).toEqual(false);
+                    });
+
+                    it("incorrect because it's first element length is not matching a worldSize", () => {
+                        const worldSize = 3;
+                        const seed = [
+                            [1,1,0,1,1,1,1],
+                            [1,1,0],
+                            [1,1,1]];
+
+                        expect(world.validateWorldParameters(worldSize, seed)).toEqual(false);
+                    });
+
+                });
+            });
+
+            describe("when tickTime parameter is", () => {
+
+            });
         });
 
+        describe("should return true", () => {
+            describe("when seed parameter structure is", () => {
+                describe("correct because", () => {
+                    it("it's not an array, but null (correct)", () => {
+                        const worldSize = 3;
+                        const seed = null;
 
+                        expect(world.validateWorldParameters(worldSize, seed)).toEqual(true);
+                    });
 
-        it("should ", () => {
+                    it("it's not an array, but undefined (correct)", () => {
+                        const worldSize = 3;
 
-        });
-
-        it("should ", () => {
-
-        });
-
-        it("should ", () => {
-
-        });
-
-        it("should ", () => {
-
-        });
-
-        it("should ", () => {
-
-        });
-
-        it("should ", () => {
-
-        });
-
-        it("should ", () => {
-
-        });
+                        expect(world.validateWorldParameters(worldSize)).toEqual(true);
+                    });
+                });
+            });
+        })
     });
-
-
-
 });
