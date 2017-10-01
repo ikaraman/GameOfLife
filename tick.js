@@ -122,63 +122,44 @@ function liveCellsAround(world, x, y) {
 
 
 function ifCellLonely(world, x, y) {
-    if (liveCellsAround(world, x, y) < 2) {
-        return true;
-    } else {
-        return false;
-    }
+    return ((world[x][y] === 1) && (liveCellsAround(world, x, y) < 2));
 }
 function ifCellSupported(world, x, y) {
-    if (liveCellsAround(world, x, y) === 2 || liveCellsAround(world, x, y) === 3) {
-        return true;
-    } else {
-        return false;
-    }
+    return ((world[x][y] === 1) && (liveCellsAround(world, x, y) === 2 || liveCellsAround(world, x, y) === 3));
 }
 function ifCellOverpopulated(world, x, y) {
-    if (liveCellsAround(world, x, y) > 3) {
-        return true;
-    } else {
-        return false;
-    }
+    return ((world[x][y] === 1) && (liveCellsAround(world, x, y) > 3));
 }
 function ifThreeNeighbours(world, x, y) {
-    if (liveCellsAround(world, x, y) === 3) {
-        return true;
-    } else {
-        return false;
-    }
+    return ((world[x][y] === 0) && (liveCellsAround(world, x, y) === 3));
 }
 
-function live(toLive, newWorld, x, y) {
-    if (toLive) {
-        newWorld[x][y] = 1;
-    }
-}
-function die(toDie, newWorld, x, y) {
-    if (toDie) {
-        newWorld[x][y] = 0;
-    }
-}
-function spawn(toSpawn, newWorld, x, y) {
-    if (toSpawn) {
-        newWorld[x][y] = 1;
-    }
-}
+function liveIfAny(liveRules, oldWorld, newWorld, x, y) {
 
+    for (let rule in liveRules) {
+        if (liveRules[rule](oldWorld, x, y)) {
+            newWorld[x][y] = 1;
+            return;
+        }
+    }
+}
+function dieIfAny(dieRules, oldWorld, newWorld, x, y) {
+
+    for (let rule in dieRules) {
+        if (dieRules[rule](oldWorld, x, y)) {
+            newWorld[x][y] = 0;
+            return;
+        }
+    }
+}
 
 function nextTick(world) {
     let newWorld = clone(world);
 
     for (let x = 0; x < world.length; x++) {
         for (let y = 0; y < world.length; y++) {
-            if (world[x][y] === 0) {
-                spawn(ifThreeNeighbours(world, x, y), newWorld, x, y);
-            } else {
-                die(ifCellLonely(world, x, y), newWorld, x, y);
-                die(ifCellOverpopulated(world, x, y), newWorld, x, y);
-                live(ifCellSupported(world, x, y), newWorld, x, y);
-            }
+            dieIfAny([ ifCellLonely, ifCellOverpopulated ], world, newWorld, x, y);
+            liveIfAny([ ifCellSupported, ifThreeNeighbours ], world, newWorld, x, y);
         }
     }
     return newWorld;
