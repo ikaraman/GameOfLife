@@ -7,6 +7,9 @@ const gameOfLife = require("gameOfLife"),
 console.log = jest.fn(function() {
 });
 
+world.drawWorld = jest.fn(function() {
+});
+
 //source: https://en.wikipedia.org/wiki/Conway%27s_game_of_Life
 describe("World-based tests", () => {
     describe("Still life tests:", () => {
@@ -147,14 +150,8 @@ describe("gameOfLife() function:", () => {
             [0, 0],
             [0, 0]];
 
-        const drawWorldUnmocker = world.drawWorld;
-        world.drawWorld = jest.fn(function() {
-        });
-
         gameOfLife.gameOfLife(2, seed);
         expect(world.drawWorld).toHaveBeenLastCalledWith(newWorld, undefined);
-
-        world.drawWorld = drawWorldUnmocker;
     });
 
     it("should generate a new world when being run without initial seed", () => {
