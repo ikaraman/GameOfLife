@@ -8,9 +8,6 @@ console.log = jest.fn(function() {
 process.stdout.write = jest.fn(function() {
 });
 
-// world.sleep = jest.fn(function() {
-// });
-
 describe("world() tests:", () => {
     describe("generateWorld()", () => {
         it("should generate a random world when called without a seed", () => {
@@ -22,7 +19,8 @@ describe("world() tests:", () => {
 
     describe("isNextGenerationEqual()", () => {
         it("should return TRUE if called with 2 identical worlds", () => {
-            const world1 = [[0, 0, 0, 0],
+            const world1 = [
+                [0, 0, 0, 0],
                 [0, 0, 1, 0],
                 [0, 1, 0, 1],
                 [0, 0, 1, 0]];
@@ -31,12 +29,14 @@ describe("world() tests:", () => {
         });
 
         it("should return FALSE if called with 2 NON-identical worlds", () => {
-            const world1 = [[0, 0, 0, 0],
+            const world1 = [
+                [0, 0, 0, 0],
                 [0, 0, 1, 0],
                 [0, 1, 0, 1],
                 [0, 0, 1, 0]];
 
-            const world2 = [[0, 0, 1, 0],
+            const world2 = [
+                [0, 0, 1, 0],
                 [0, 1, 1, 0],
                 [0, 1, 0, 1],
                 [0, 0, 1, 0]];
