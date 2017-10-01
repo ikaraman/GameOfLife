@@ -8,6 +8,9 @@ console.log = jest.fn(function() {
 process.stdout.write = jest.fn(function() {
 });
 
+// world.sleep = jest.fn(function() {
+// });
+
 describe("world() tests:", () => {
     describe("generateWorld()", () => {
         it("should generate a random world when called without a seed", () => {
@@ -64,6 +67,26 @@ describe("world() tests:", () => {
             expect(process.stdout.write).toHaveBeenLastCalledWith("*");
             expect(console.log).toHaveBeenLastCalledWith("");
         });
+
+        describe("sleep()", () => {
+            it("should work properly when tickTime is undefined", () => {
+                //this function is void
+                //test gives coverage
+                world.sleep(undefined);
+            });
+
+            it("should work properly when tickTime is null", () => {
+                //this function is void
+                //test gives coverage
+                world.sleep(null);
+            });
+
+            it("should work properly when tickTime is an integer", () => {
+                //this function is void
+                //test gives coverage
+                world.sleep(5);
+            });
+        });
     });
 
     describe("validateWorldParameters()", () => {
@@ -87,8 +110,7 @@ describe("world() tests:", () => {
 
             describe("when worldSize parameter is NOT a number", () => {
                 it("worldSize is undefined", () => {
-                    const worldSize = undefined;
-                    expect(world.validateWorldParameters(worldSize)).toEqual(false);
+                    expect(world.validateWorldParameters(undefined)).toEqual(false);
                 });
 
                 it("worldSize is null", () => {
@@ -227,8 +249,77 @@ describe("world() tests:", () => {
                 });
             });
 
-            describe("when tickTime parameter is", () => {
+            describe("when tickTime parameter is a number", () => {
+                it("when tickTime is float", () => {
+                    const worldSize = 3;
+                    const tickTime = 10.5
 
+                    expect(world.validateWorldParameters(worldSize, undefined, tickTime)).toEqual(false);
+                });
+
+                it("when tickTime is positive infinity", () => {
+                    const worldSize = 3;
+                    const tickTime = "infinity";
+
+                    expect(world.validateWorldParameters(worldSize, undefined, tickTime)).toEqual(false);
+                });
+
+                it("when tickTime is proper integer", () => {
+                    const worldSize = 3;
+                    const tickTime = 10;
+
+                    expect(world.validateWorldParameters(worldSize, undefined, tickTime)).toEqual(true);
+                });
+            });
+
+            describe("when tickTime parameter is NOT a number", () => {
+                it("tickTime is undefined", () => {
+                    const worldSize = 3;
+
+                    expect(world.validateWorldParameters(worldSize, undefined, undefined)).toEqual(true);
+                });
+
+                it("tickTime is null", () => {
+                    const worldSize = 3;
+                    const tickTime = null;
+
+                    expect(world.validateWorldParameters(worldSize, undefined, tickTime)).toEqual(true);
+                });
+
+                it("tickTime is NaN", () => {
+                    const worldSize = 3;
+                    const tickTime = NaN;
+
+                    expect(world.validateWorldParameters(worldSize, undefined, tickTime)).toEqual(false);
+                });
+
+                it("tickTime is an array", () => {
+                    const worldSize = 3;
+                    const tickTime = [];
+
+                    expect(world.validateWorldParameters(worldSize, undefined, tickTime)).toEqual(false);
+                });
+
+                it("tickTime is an object ", () => {
+                    const worldSize = 3;
+                    const tickTime = {};
+
+                    expect(world.validateWorldParameters(worldSize, undefined, tickTime)).toEqual(false);
+                });
+
+                it("tickTime is a string", () => {
+                    const worldSize = 3;
+                    const tickTime = "test tick time";
+
+                    expect(world.validateWorldParameters(worldSize, undefined, tickTime)).toEqual(false);
+                });
+
+                it("tickTime is boolean", () => {
+                    const worldSize = 3;
+                    const tickTime = true;
+
+                    expect(world.validateWorldParameters(worldSize, undefined, tickTime)).toEqual(false);
+                });
             });
         });
 

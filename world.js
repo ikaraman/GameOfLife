@@ -118,6 +118,10 @@ function isNextGenerationEqual(world, newWorld) {
 }
 
 function sleep(sleepDuration) {
+    if (sleepDuration === undefined || sleepDuration === null) {
+        sleepDuration = 1;
+    }
+
     let now = new Date().getTime();
     while (new Date().getTime() < now + sleepDuration) {
         /* do nothing */
@@ -136,7 +140,7 @@ function drawWorld(world, tickTime) {
         }
         console.log("");
     }
-    sleep((tickTime === undefined) || (tickTime === null ) ? 1 : tickTime);
+    sleep(tickTime);
 }
 
 module.exports = {
@@ -144,5 +148,6 @@ module.exports = {
     checkIsWorldAlive: checkIsWorldAlive,
     isNextGenerationEqual: isNextGenerationEqual,
     drawWorld: drawWorld,
+    sleep: sleep,
     validateWorldParameters: validateWorldParameters
 };
