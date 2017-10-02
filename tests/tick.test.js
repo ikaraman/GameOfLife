@@ -33,7 +33,7 @@ describe("tick() tests:", () => {
             const x = 0;
             const y = 0;
 
-            expect(tick.liveCellsAround(world, x, y)).toEqual(1);
+            expect(tick.aliveCellsAroundCell(world, x, y)).toEqual(1);
         });
 
         it("should properly calculate quantity of live cells nearby when cell is in top left corner", () => {
@@ -49,7 +49,7 @@ describe("tick() tests:", () => {
             const y = 0;
 
             expect(tick.nextTick(world)).toEqual(expectedWorld);
-            expect(tick.liveCellsAround(world, x, y)).toEqual(2);
+            expect(tick.aliveCellsAroundCell(world, x, y)).toEqual(2);
         });
 
         it("should properly calculate quantity of live cells nearby when cell is in top right corner", () => {
@@ -60,7 +60,7 @@ describe("tick() tests:", () => {
             const x = 0;
             const y = 2;
 
-            expect(tick.liveCellsAround(world, x, y)).toEqual(2);
+            expect(tick.aliveCellsAroundCell(world, x, y)).toEqual(2);
         });
 
         it("should properly calculate quantity of live cells nearby when cell is in top border, not corner", () => {
@@ -71,7 +71,7 @@ describe("tick() tests:", () => {
             const x = 0;
             const y = 1;
 
-            expect(tick.liveCellsAround(world, x, y)).toEqual(2);
+            expect(tick.aliveCellsAroundCell(world, x, y)).toEqual(2);
         });
 
         it("should properly calculate quantity of live cells nearby when cell is in left border, not corner", () => {
@@ -82,7 +82,7 @@ describe("tick() tests:", () => {
             const x = 1;
             const y = 0;
 
-            expect(tick.liveCellsAround(world, x, y)).toEqual(2);
+            expect(tick.aliveCellsAroundCell(world, x, y)).toEqual(2);
         });
 
         it("should properly calculate quantity of live cells nearby when cell is in the right border, not corner", () => {
@@ -93,7 +93,7 @@ describe("tick() tests:", () => {
             const x = 1;
             const y = 2;
 
-            expect(tick.liveCellsAround(world, x, y)).toEqual(2);
+            expect(tick.aliveCellsAroundCell(world, x, y)).toEqual(2);
         });
 
         it("should properly calculate quantity of live cells nearby when cell is in the bottom, not corner", () => {
@@ -104,7 +104,7 @@ describe("tick() tests:", () => {
             const x = 2;
             const y = 1;
 
-            expect(tick.liveCellsAround(world, x, y)).toEqual(2);
+            expect(tick.aliveCellsAroundCell(world, x, y)).toEqual(2);
         });
 
         it("should properly calculate quantity of live cells nearby when cell is in the bottom right corner", () => {
@@ -115,7 +115,7 @@ describe("tick() tests:", () => {
             const x = 2;
             const y = 2;
 
-            expect(tick.liveCellsAround(world, x, y)).toEqual(1);
+            expect(tick.aliveCellsAroundCell(world, x, y)).toEqual(1);
         });
 
         it("should properly calculate quantity of live cells nearby when cell is in the bottom left corner", () => {
@@ -126,7 +126,7 @@ describe("tick() tests:", () => {
             const x = 2;
             const y = 0;
 
-            expect(tick.liveCellsAround(world, x, y)).toEqual(0);
+            expect(tick.aliveCellsAroundCell(world, x, y)).toEqual(0);
         });
 
         it("should properly calculate quantity of live cells nearby when cell is in the middle", () => {
@@ -137,7 +137,7 @@ describe("tick() tests:", () => {
             const x = 1;
             const y = 1;
 
-            expect(tick.liveCellsAround(world, x, y)).toEqual(4);
+            expect(tick.aliveCellsAroundCell(world, x, y)).toEqual(4);
         });
     });
 });
