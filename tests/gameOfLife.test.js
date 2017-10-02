@@ -10,7 +10,7 @@ console.log = jest.fn(function() {
 world.drawWorld = jest.fn(function() {
 });
 
-//source: https://en.wikipedia.org/wiki/Conway%27s_game_of_Life
+
 describe("World-based tests", () => {
     describe("Still life tests:", () => {
         it("block should stop execution without ticking", () => {

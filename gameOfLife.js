@@ -4,6 +4,7 @@ const tick = require("./tick"),
     world = require("./world"),
     clone = require("clone");
 
+//source: https://en.wikipedia.org/wiki/Conway%27s_game_of_Life
 
 function gameOfLife(worldSize, seed, tickTime) {
     if (!world.validateWorldParameters(worldSize, seed, tickTime)) {
